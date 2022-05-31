@@ -12,7 +12,7 @@ class RestaurantDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future filter(String filter) async {
+  filter(String filter) {
     if (filter == "") {
       return;
     }
@@ -28,6 +28,16 @@ class RestaurantDataProvider with ChangeNotifier {
             (list.categories!.length > 2 ? list.categories![2] : '') == filter)
         .toList();
     list = listWithFilter;
+    notifyListeners();
+  }
+
+  search(String text) {
+    if (text == '') {
+      fetchData();
+      return;
+    }
+    final searchList = list.where((list) => list.name!.contains(text)).toList();
+    list = searchList;
     notifyListeners();
   }
 }

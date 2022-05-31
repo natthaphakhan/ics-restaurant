@@ -12,12 +12,12 @@ class SearchForm extends StatefulWidget {
 }
 
 class _SearchFormState extends State<SearchForm> {
-  List<String> listOfValue = ["all","restaurant", "cafe", "bakery"];
+  List<String> listOfValue = ["all", "restaurant", "cafe", "bakery"];
+  TextEditingController searchForm = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<RestaurantDataProvider>(context);
-
     return Form(
       child: Column(
         children: [
@@ -81,6 +81,12 @@ class _SearchFormState extends State<SearchForm> {
                   ),
                 ),
               ),
+              controller: searchForm,
+              onChanged: (value) {
+                setState(() {
+                  provider.search(value);
+                });
+              },
             ),
           ),
         ],
