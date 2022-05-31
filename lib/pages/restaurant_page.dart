@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ics/providers/listen_tapbar.dart';
 import 'package:ics/widgets/show_image.dart';
-import 'package:ics/widgets/store_detail.dart';
+import 'package:ics/widgets/restaurant_detail.dart';
 import 'package:ics/widgets/tab_bar.dart';
 import 'package:provider/provider.dart';
 
-class StorePage extends StatelessWidget {
-  const StorePage({Key? key}) : super(key: key);
+class RestaurantPage extends StatelessWidget {
+  const RestaurantPage({Key? key, required this.id}) : super(key: key);
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,11 @@ class StorePage extends StatelessWidget {
           Expanded(
             child: SizedBox(
               child: SingleChildScrollView(
-                child: listener.isTab ? const StoreDetail() : const ShowImage(),
+                child: listener.isTab
+                    ? RestaurantDetail(
+                        id: id,
+                      )
+                    : const ShowImage(),
               ),
             ),
           ),

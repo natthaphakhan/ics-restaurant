@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:ics/widgets/card_item.dart';
+import 'package:ics/providers/restaurant_data_provider.dart';
+import 'package:ics/widgets/show_item.dart';
 import 'package:ics/widgets/search_form.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final currentDay = DateFormat('EEEE').format(DateTime.now());
+
+  @override
   Widget build(BuildContext context) {
+    final provider =
+        Provider.of<RestaurantDataProvider>(context, listen: false);
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -46,11 +59,32 @@ class Home extends StatelessWidget {
             const SearchForm(),
             Expanded(
               child: SizedBox(
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: ((context, index) {
-                    return const CardItem();
-                  }),
+                child: FutureBuilder(
+                  future: provider.readJson(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) =>
+                          snapshot.connectionState == ConnectionState.waiting
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : ListView.builder(
+                                  itemCount: provider.list.length,
+                                  itemBuilder: ((context, i) {
+                                    final time = provider.list[i].operationTime!
+                                        .where((time) => time.day == currentDay)
+                                        .toList();
+                                    return ShowItem(
+                                      id: provider.list[i].id!,
+                                      name: provider.list[i].name!,
+                                      profileImageUrl:
+                                          provider.list[i].profileImageUrl!,
+                                      images: provider.list[i].images!,
+                                      rating: provider.list[i].rating!,
+                                      timeClose: time[0].timeClose!,
+                                      timeOpen: time[0].timeOpen!,
+                                    );
+                                  }),
+                                ),
                 ),
               ),
             ),

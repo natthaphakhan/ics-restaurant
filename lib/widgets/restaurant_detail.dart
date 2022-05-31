@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:ics/models/restaurant_model.dart';
+import 'package:ics/providers/restaurant_data_provider.dart';
+import 'package:provider/provider.dart';
 
-class StoreDetail extends StatelessWidget {
-  const StoreDetail({
+class RestaurantDetail extends StatelessWidget {
+  const RestaurantDetail({
     Key? key,
+    required this.id,
   }) : super(key: key);
+  final int id;
 
   @override
   Widget build(BuildContext context) {
+    final provider =
+        Provider.of<RestaurantDataProvider>(context, listen: false);
+    List<DataModel> data =
+        provider.list.where((list) => list.id == id).toList();
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 45),
       child: Card(
@@ -21,7 +31,7 @@ class StoreDetail extends StatelessWidget {
               topRight: Radius.circular(10),
             ),
             child: Image.network(
-              'https://images.unsplash.com/photo-1587174147003-eb7dc051122b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDcxMTl8MHwxfHNlYXJjaHwyfHxzaG9wJTIwcmVzdGF1cmFudCUyMGJyZWFkfGVufDB8fHx8MTY0NjM2Nzg3Mg&ixlib=rb-1.2.1&q=80&w=1080',
+              data[0].profileImageUrl!,
               height: 200,
               width: double.maxFinite,
               fit: BoxFit.cover,
@@ -34,11 +44,11 @@ class StoreDetail extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 290,
                       child: Text(
-                        'DAI LOU MODERN CHINESE CUISINE',
-                        style: TextStyle(
+                        data[0].name!,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -54,11 +64,11 @@ class StoreDetail extends StatelessWidget {
                               color: const Color.fromRGBO(19, 75, 138, 1),
                               borderRadius: BorderRadius.circular(10)),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
-                            '4.5',
-                            style: TextStyle(
+                            data[0].rating.toString(),
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(19, 75, 138, 1),
@@ -82,9 +92,9 @@ class StoreDetail extends StatelessWidget {
                     Expanded(child: SizedBox())
                   ],
                 ),
-                const Text(
-                  '55/5 Soi Phahon Yothin 2, Khwaeng Samsen Nai, Khet Phaya Thai, Krung Thep Maha Nakhon 10400, Thailand',
-                  style: TextStyle(
+                Text(
+                  data[0].address!,
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
@@ -102,14 +112,14 @@ class StoreDetail extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  children: const [
+                  children: [
                     Text(
-                      'Monday: 10:00 AM – 6:00 PM\nTuesday: 10:00 AM – 6:00 PM\nWednesday: 10:00 AM – 6:00 PM\nThursday: 10:00 AM – 6:00 PM\nFriday: 10:00 AM – 6:00 PM\nSaturday: Closed\nSunday: Closed',
-                      style: TextStyle(
+                      'Monday: ${data[0].operationTime![0].timeOpen} – ${data[0].operationTime![0].timeClose}\nTuesday: ${data[0].operationTime![1].timeOpen} – ${data[0].operationTime![1].timeClose}\nWednesday: ${data[0].operationTime![2].timeOpen} – ${data[0].operationTime![2].timeClose}\nThursday: ${data[0].operationTime![3].timeOpen} – ${data[0].operationTime![3].timeClose}\nFriday: ${data[0].operationTime![4].timeOpen} – ${data[0].operationTime![4].timeClose}\nSaturday: ${data[0].operationTime![5].timeOpen} – ${data[0].operationTime![5].timeClose}\nSunday: ${data[0].operationTime![6].timeOpen} – ${data[0].operationTime![6].timeClose}',
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    Expanded(child: SizedBox())
+                    const Expanded(child: SizedBox())
                   ],
                 ),
               ],

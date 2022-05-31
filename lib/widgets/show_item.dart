@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:ics/pages/store_page.dart';
+import 'package:ics/pages/restaurant_page.dart';
 import 'package:ics/widgets/image_slider.dart';
 
-class CardItem extends StatelessWidget {
-  const CardItem({Key? key}) : super(key: key);
+class ShowItem extends StatelessWidget {
+  const ShowItem(
+      {Key? key,
+      required this.name,
+      required this.profileImageUrl,
+      required this.images,
+      required this.rating,
+      required this.timeOpen,
+      required this.timeClose,
+      required this.id})
+      : super(key: key);
+  final int id;
+  final String name;
+  final String profileImageUrl;
+  final List<String> images;
+  final double rating;
+  final String timeOpen;
+  final String timeClose;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (() {
         Navigator.push(context,
-            MaterialPageRoute(builder: ((context) => const StorePage())));
+            MaterialPageRoute(builder: ((context) =>  RestaurantPage(id: id,))));
       }),
       child: Stack(
         children: [
@@ -29,40 +45,42 @@ class CardItem extends StatelessWidget {
                       topRight: Radius.circular(10),
                     ),
                     child: Image.network(
-                      'https://images.unsplash.com/photo-1587174147003-eb7dc051122b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDcxMTl8MHwxfHNlYXJjaHwyfHxzaG9wJTIwcmVzdGF1cmFudCUyMGJyZWFkfGVufDB8fHx8MTY0NjM2Nzg3Mg&ixlib=rb-1.2.1&q=80&w=1080',
+                      profileImageUrl,
                       fit: BoxFit.cover,
                       height: 85,
                       width: double.maxFinite,
                     ),
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Padding(
-                        padding: EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Text(
-                          'Cantina Wine Bar & Italian Kitchen',
-                          style: TextStyle(
+                          name,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Expanded(child: SizedBox())
+                      const Expanded(child: SizedBox())
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Row(
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.calendar_month,
                         ),
                         Text(
-                          '10:00 AM - 6:00 PM',
+                          '$timeOpen - $timeClose',
                         ),
                       ],
                     ),
                   ),
-                  const ImageSlider()
+                  ImageSlider(
+                    images: images,
+                  )
                 ],
               ),
             ),
@@ -77,10 +95,10 @@ class CardItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 color: const Color.fromRGBO(19, 75, 138, 1),
               ),
-              child: const Center(
+              child: Center(
                   child: Text(
-                '4.5',
-                style: TextStyle(
+                rating.toString(),
+                style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
