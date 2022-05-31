@@ -70,7 +70,7 @@ class RestaurantPage extends StatelessWidget {
                     ? RestaurantDetail(
                         id: id,
                       )
-                    : const ShowImage(),
+                    : ShowImage(id: id,),
               ),
             ),
           ),

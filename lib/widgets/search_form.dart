@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ics/providers/restaurant_data_provider.dart';
+import 'package:provider/provider.dart';
 
 class SearchForm extends StatefulWidget {
   const SearchForm({
@@ -10,11 +12,12 @@ class SearchForm extends StatefulWidget {
 }
 
 class _SearchFormState extends State<SearchForm> {
-  Object? _selectedValue;
-  List<String> listOfValue = ['Restaurant', 'Bakery', 'Cafe'];
+  List<String> listOfValue = ["all","restaurant", "cafe", "bakery"];
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<RestaurantDataProvider>(context);
+
     return Form(
       child: Column(
         children: [
@@ -38,26 +41,13 @@ class _SearchFormState extends State<SearchForm> {
                   ),
                 ),
               ),
-              value: _selectedValue,
               hint: const Text(
                 'Restaurant',
               ),
-              isExpanded: true,
               onChanged: (value) {
                 setState(() {
-                  _selectedValue = value.toString();
+                  provider.filter(value.toString());
                 });
-              },
-              onSaved: (value) {
-                setState(() {
-                  _selectedValue = value.toString();
-                });
-              },
-              validator: (value) {
-                if (value.toString().isEmpty) {
-                  return "can't empty";
-                }
-                return null;
               },
               items: listOfValue.map((String val) {
                 return DropdownMenuItem(

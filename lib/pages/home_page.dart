@@ -14,11 +14,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final currentDay = DateFormat('EEEE').format(DateTime.now());
+  Future? fetchDataFuture;
+
+  @override
+  void initState() {
+    fetchDataFuture = Provider.of<RestaurantDataProvider>(context, listen: false).fetchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider =
-        Provider.of<RestaurantDataProvider>(context, listen: false);
+        Provider.of<RestaurantDataProvider>(context);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -60,7 +67,7 @@ class _HomeState extends State<Home> {
             Expanded(
               child: SizedBox(
                 child: FutureBuilder(
-                  future: provider.readJson(),
+                  future: fetchDataFuture,
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) =>
                           snapshot.connectionState == ConnectionState.waiting

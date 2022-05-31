@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:ics/models/restaurant_model.dart';
+import 'package:ics/providers/restaurant_data_provider.dart';
+import 'package:provider/provider.dart';
 
 class ShowImage extends StatelessWidget {
-  const ShowImage({Key? key}) : super(key: key);
+  const ShowImage({Key? key, required this.id}) : super(key: key);
+  final int id;
 
   @override
   Widget build(BuildContext context) {
+    final provider =
+        Provider.of<RestaurantDataProvider>(context, listen: false);
+    List<DataModel> data =
+        provider.list.where((list) => list.id == id).toList();
+    List listImage = data[0].images!;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
       child: Card(
@@ -38,13 +48,13 @@ class ShowImage extends StatelessWidget {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10)),
                     child: Image.network(
-                      "https://images.unsplash.com/photo-1588280991458-d759882787cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDcxMTl8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwY29mZmVlfGVufDB8fHx8MTY0NjM2Nzg3NQ&ixlib=rb-1.2.1&q=80&w=1080",
+                      listImage[0],
                       width: double.maxFinite,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
                   Image.network(
-                    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDcxMTl8MHwxfHNlYXJjaHwyfHxyZXN0YXVyYW50JTIwY29mZmVlfGVufDB8fHx8MTY0NjM2Nzg3NQ&ixlib=rb-1.2.1&q=80&w=1080",
+                    listImage[1],
                     width: double.maxFinite,
                     fit: BoxFit.fitWidth,
                   ),
@@ -53,7 +63,7 @@ class ShowImage extends StatelessWidget {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
                     child: Image.network(
-                      "https://images.unsplash.com/photo-1485182708500-e8f1f318ba72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMDcxMTl8MHwxfHNlYXJjaHwzfHxyZXN0YXVyYW50JTIwY29mZmVlfGVufDB8fHx8MTY0NjM2Nzg3NQ&ixlib=rb-1.2.1&q=80&w=1080",
+                      listImage[2],
                       width: double.maxFinite,
                       fit: BoxFit.fitWidth,
                     ),
