@@ -1,16 +1,13 @@
 # ics
 
-A new Flutter project.
+แบบทดสอบการทำแอปพลิเคชันค้นหาร้านอาหารและคาเฟ่
 
-## Getting Started
+## ขั้นตอนการ run application (debug mode)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. ดาวน์โหลด zip code จาก github
+2. แตกไฟล์
+3. เปิดโปรแกรม vscode 
+4. เปิดโฟลเดอร์ ics ที่แตกไฟล์ไว้แล้ว
+5. คลิกเลือกไฟล์ lib/main.dart
+6. เลือกและเปิด emulator ที่ต้องการรัน (แนะนำเป็น android emulator API 31)
+7. คลิกที่เมนู Run > Start Debugging
