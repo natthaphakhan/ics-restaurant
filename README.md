@@ -8,6 +8,8 @@
 2. แตกไฟล์
 3. เปิดโปรแกรม vscode 
 4. เปิดโฟลเดอร์ ics ที่แตกไฟล์ไว้แล้ว
-5. คลิกเลือกไฟล์ lib/main.dart
-6. เลือกและเปิด emulator ที่ต้องการรัน (แนะนำเป็น android emulator API 31)
-7. คลิกที่เมนู Run > Start Debugging
+5. คลิกที่เมนู terminal > new terminal
+6. พิมพ์คำสั่งใน terminal ดังนี้ flutter pub get
+7. คลิกเลือกไฟล์ lib/main.dart
+8. เลือก emulator ที่ต้องการรัน บริเวณมุมล่างขวาของโปรแกรม vscode (แนะนำเป็น android emulator รุ่น pixel 5 API 31)
+9. คลิกที่เมนู Run > Start Debugging
